@@ -1,4 +1,5 @@
 import logging
+
 LEVELS = {"fatal": 50, "error": 40, "warn": 30, "info": 20, "debug": 10, "trace": 5}
 
 class _Trace(logging.DEBUG.__class__):
