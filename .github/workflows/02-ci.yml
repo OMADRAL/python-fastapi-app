@@ -1,7 +1,13 @@
 
 name: CI
 
-on: [push]
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  APP_NAME: fastapi-starter
 
 jobs:
   lint:
@@ -21,6 +27,18 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
+
+      - name: Afficher les contextes
+        run: |
+          echo "Application : ${{ env.APP_NAME }}"
+          echo "Acteur : ${{ github.actor }}"
+          echo "Evenement : ${{ github.event_name }}"
+          echo "Branche : ${{ github.ref_name }}"
+          echo "SHA : ${{ github.sha }}"
+          echo "OS : ${{ runner.os }}"
+
+      - name: Afficher le contexte GitHub
+        run: echo '${{ toJson(github) }}'
 
       - name: Vérifier le style
         run: ruff check .
