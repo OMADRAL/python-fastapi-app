@@ -37,7 +37,10 @@ jobs:
           echo "OS : ${{ runner.os }}"
 
       - name: Afficher le contexte GitHub
-        run: echo '${{ toJson(github) }}'
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
 
       - name: Vérifier le style
         run: ruff check .
