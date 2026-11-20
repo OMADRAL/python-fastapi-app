@@ -1,27 +1,49 @@
-
 # TP6 – Variables d'environnement, Inputs et Outputs
 
-## Q1. Pourquoi la variable n'est-elle pas disponible dans la step qui l'a définie, mais seulement dans les suivantes ?
+## Q1. Pourquoi GITHUB_ENV ?
 
-GITHUB_ENV est lu par GitHub Actions après l'exécution de la step. Les variables sont donc disponibles uniquement dans les steps suivantes du même job.
+GITHUB_ENV permet de partager les variables d'environnement
+entre les différentes steps d'un même job.
+
+### Capture d'écran
+
+![Variables d'environnement](screenshots/tp6-build.png)
+
+---
 
 ## Q2. Quelle est la portée de GITHUB_ENV ?
 
-GITHUB_ENV permet de partager les variables d'environnement entre les steps d'un même job. La variable APP_NAME n'est donc pas disponible dans le job verify-env.
+Les variables sont disponibles dans les steps suivantes
+du même job, mais pas dans les autres jobs.
 
-## Q3. Que se passe-t-il si on écrit > au lieu de >> dans GITHUB_OUTPUT ?
+### Capture d'écran
 
-L'opérateur >> ajoute les données sans supprimer le contenu précédent. L'opérateur > écrase le contenu précédent. Le deuxième output remplace donc le premier si on utilise > deux fois.
+![Portée des variables](screenshots/tp6-verify-env.png)
 
-## Q4. Pourquoi GITHUB_ENV ne suffit-il pas ici, alors que GITHUB_OUTPUT fonctionne entre jobs ?
+---
 
-GITHUB_ENV partage les variables entre les steps d'un même job. GITHUB_OUTPUT permet de créer des outputs au niveau d'une step, de les exposer au niveau du job et de les récupérer dans un autre job grâce à needs.
+## Q3. Différence entre > et >>
 
-## Q5. Que se passe-t-il si on retire needs: build du job deploy ?
+L'opérateur >> ajoute une nouvelle valeur tandis que >
+remplace le contenu précédent du fichier.
 
-Le job deploy peut s'exécuter en parallèle avec build. Il ne dispose plus de la dépendance permettant de récupérer les outputs de build avec needs.build.outputs.full_version.
+## Q4. Différence entre GITHUB_ENV et GITHUB_OUTPUT
 
+GITHUB_ENV partage les variables entre steps.
+GITHUB_OUTPUT permet de transmettre des outputs entre jobs
+avec needs.
 
+### Capture d'écran
+
+![Output entre jobs](screenshots/tp6-deploy.png)
+
+---
+
+## Q5. Que se passe-t-il si on retire needs ?
+
+Le job deploy peut s'exécuter indépendamment du job build.
+Il ne peut alors plus récupérer correctement les outputs
+de build via needs.build.outputs.
 
 # TP7 – Actions tierces et actions personnalisées
 
@@ -49,3 +71,19 @@ L'action locale se trouve dans le dépôt, dans .github/actions/build-info/actio
 Dans une action composite, chaque step qui utilise run doit préciser son shell.
 
 GitHub doit connaître l'interpréteur à utiliser pour exécuter les commandes. Ici, nous utilisons bash.
+
+
+# Captures d'écran TP7
+
+## Exécution du job build
+
+![Build](screenshots/tp7-build.png)
+
+## docker-hello
+
+![Docker](screenshots/tp7-docker-hello.png)
+
+## Vérification du rapport
+
+![Verify](screenshots/tp7-verify.png)
+
