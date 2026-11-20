@@ -57,14 +57,11 @@ GitHub doit connaître l'interpréteur à utiliser pour exécuter les commandes.
 
 ![Build](screenshots/tp7-build.png)
 
-## Artefact build-report
+## docker-hello
 
-![Artifact](screenshots/tp7-artifact.png)
+![Docker](screenshots/tp7-docker-hello.png)
 
 ## Vérification du rapport
 
 ![Verify](screenshots/tp7-verify.png)
 
-## Action Docker
-
-![Docker](screenshots/tp7-docker.png)
