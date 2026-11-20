@@ -36,3 +36,16 @@ actions/setup-node a besoin de with pour connaître la version de Node.js à ins
 Chaque job s'exécute sur un runner indépendant. Le fichier créé dans le job build n'existe donc pas automatiquement dans le job verify.
 
 L'artefact permet de transférer le fichier entre les deux jobs.
+
+
+## Q6. Pourquoi actions/checkout doit-il s'exécuter avant l'appel d'une action locale ?
+
+actions/checkout récupère les fichiers du dépôt sur le runner.
+
+L'action locale se trouve dans le dépôt, dans .github/actions/build-info/action.yml. Il faut donc récupérer le dépôt avant de pouvoir utiliser cette action.
+
+## Q7. Pourquoi shell: bash est-il obligatoire sur les steps run d'une action composite ?
+
+Dans une action composite, chaque step qui utilise run doit préciser son shell.
+
+GitHub doit connaître l'interpréteur à utiliser pour exécuter les commandes. Ici, nous utilisons bash.
