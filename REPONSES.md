@@ -49,3 +49,22 @@ L'action locale se trouve dans le dépôt, dans .github/actions/build-info/actio
 Dans une action composite, chaque step qui utilise run doit préciser son shell.
 
 GitHub doit connaître l'interpréteur à utiliser pour exécuter les commandes. Ici, nous utilisons bash.
+
+
+# Captures d'écran TP7
+
+## Exécution du job build
+
+![Build](screenshots/tp7-build.png)
+
+## Artefact build-report
+
+![Artifact](screenshots/tp7-artifact.png)
+
+## Vérification du rapport
+
+![Verify](screenshots/tp7-verify.png)
+
+## Action Docker
+
+![Docker](screenshots/tp7-docker.png)

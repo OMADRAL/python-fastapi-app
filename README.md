@@ -1,58 +1,46 @@
-# FastAPI Starter
+# TP6 – Variables d'environnement, Inputs et Outputs
 
-A minimal, production‑leaning FastAPI template with testing (coverage), linting/formatting, Docker, and CI. Ships with a root endpoint and a health check.
+## Q1. Pourquoi GITHUB_ENV ?
 
-## Features
-- FastAPI + Uvicorn
-- Pydantic Settings for configuration management
-- Custom logging with TRACE level support
-- Testing with pytest + pytest-cov (HTML/XML coverage, 85% threshold)
-- Ruff for linting and formatting; optional mypy typing
-- Dockerfile and GitHub Actions CI (Python 3.13)
+GITHUB_ENV permet de partager les variables d'environnement
+entre les différentes steps d'un même job.
 
-## Endpoints
-- `GET /` → `{ "message": "the server is now active" }`
-- `GET /health` → `{ "ok": true }`
+### Capture d'écran
 
-## Quick Start
-```bash
-python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
-cp .env.example .env  # Optional: customize your environment variables
-uvicorn app.main:app --reload --port 8000
-```
+![Variables d'environnement](screenshots/tp6-build.png)
 
-Open [http://localhost:8000](http://localhost:8000) and [http://localhost:8000/health](http://localhost:8000/health)
+---
 
-## Testing with Coverage
+## Q2. Quelle est la portée de GITHUB_ENV ?
 
-```bash
-pytest
-# Outputs: htmlcov/ (HTML), coverage.xml (XML), threshold enforced via pyproject.toml
-```
+Les variables sont disponibles dans les steps suivantes
+du même job, mais pas dans les autres jobs.
 
-## Linting and Formatting
+### Capture d'écran
 
-```bash
-ruff check .
-ruff format .
-# Optional typing
-mypy app
-```
+![Portée des variables](screenshots/tp6-verify-env.png)
 
-## Docker
+---
 
-```bash
-docker build -t fastapi-starter .
-docker run -p 8000:8000 fastapi-starter
-```
+## Q3. Différence entre > et >>
 
-## CI
+L'opérateur >> ajoute une nouvelle valeur tandis que >
+remplace le contenu précédent du fichier.
 
-GitHub Actions workflow runs linting and tests with coverage on Python 3.13. See `.github/workflows/ci.yml`.
+## Q4. Différence entre GITHUB_ENV et GITHUB_OUTPUT
 
-## License
+GITHUB_ENV partage les variables entre steps.
+GITHUB_OUTPUT permet de transmettre des outputs entre jobs
+avec needs.
 
-MIT. See [LICENSE](./LICENSE).
+### Capture d'écran
 
-Test README
+![Output entre jobs](screenshots/tp6-deploy.png)
+
+---
+
+## Q5. Que se passe-t-il si on retire needs ?
+
+Le job deploy peut s'exécuter indépendamment du job build.
+Il ne peut alors plus récupérer correctement les outputs
+de build via needs.build.outputs.
