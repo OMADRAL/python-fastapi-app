@@ -1,19 +1,18 @@
-
 name: Matrix Strategy Lab
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feature/tp-strategies
 
 jobs:
   test:
     name: Test ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
 
     continue-on-error: ${{ matrix.experimental == true }}
 
     strategy:
+      fail-fast: true
+
       matrix:
         os: [ubuntu-latest, windows-latest]
         python-version: ["3.11", "3.12", "3.13"]
@@ -26,8 +25,6 @@ jobs:
           - os: ubuntu-latest
             python-version: "3.14"
             experimental: true
-
-    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
