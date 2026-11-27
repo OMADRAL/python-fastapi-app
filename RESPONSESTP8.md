@@ -38,3 +38,17 @@ exclude:
 
 la combinaison ajoutée ensuite par include sera toujours présente.
 
+## Question Q4 – Quelle est la différence observée ? Dans quel cas choisir true ou false ?
+Correction :
+fail-fast: true	fail-fast: false
+Comportement par défaut	Désactive l'arrêt anticipé
+Un échec peut annuler les autres jobs en cours ou en attente	Les autres jobs continuent
+Exécution potentiellement plus rapide	Permet de récupérer tous les résultats
+
+Quand utiliser true ?
+
+Lorsqu'on souhaite arrêter rapidement les tests après un échec important afin d'économiser du temps et des ressources.
+
+Quand utiliser false ?
+
+Lorsqu'on souhaite obtenir les résultats de toutes les combinaisons, notamment pour tester la compatibilité d'une application sur plusieurs systèmes et versions de Python.
