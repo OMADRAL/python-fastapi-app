@@ -1,54 +1,54 @@
+
+# TP 8 – Stratégies GitHub Actions
+
 ## Q1. Combien de jobs sont générés ? Donnez la liste des combinaisons.
 
-La matrice génère 6 jobs, car elle combine 2 systèmes
-d'exploitation (Ubuntu et Windows) avec 3 versions de Python
-(3.11, 3.12 et 3.13).
+La matrice contient 2 systèmes d'exploitation et 3 versions de Python.
+
+Nombre de jobs = 2 × 3 = 6 jobs.
 
 Les combinaisons sont :
 
-- Ubuntu + Python 3.11
-- Ubuntu + Python 3.12
-- Ubuntu + Python 3.13
-- Windows + Python 3.11
-- Windows + Python 3.12
-- Windows + Python 3.13
+1. Ubuntu / Python 3.11
+2. Ubuntu / Python 3.12
+3. Ubuntu / Python 3.13
+4. Windows / Python 3.11
+5. Windows / Python 3.12
+6. Windows / Python 3.13
 
-## Question Q2 – Combien de jobs au total ?
-Correction : 6 jobs.
+## Q2. Combien de jobs au total après exclude et include ?
 
-Explication :
-1. La matrice initiale génère 6 jobs.
-2. exclude supprime Windows + Python 3.11 : il reste 5 jobs.
-3. include ajoute Ubuntu + Python 3.14 : on obtient 6 jobs.
-\[6-1+1=6\]
+Il reste 6 jobs au total.
 
-## Question Q3 – Que se passerait-il si on tentait d'exclure Python 3.14 ? Pourquoi ?
-Correction :
+- La matrice initiale génère 6 jobs.
+- exclude supprime Windows / Python 3.11.
+- Il reste donc 5 jobs.
+- include ajoute Ubuntu / Python 3.14.
 
-Python 3.14 resterait dans la matrice.
+Calcul : 6 - 1 + 1 = 6 jobs.
 
-En effet, exclude est appliqué avant include. Au moment où GitHub Actions applique exclude, la combinaison Ubuntu + Python 3.14 n'existe pas encore dans la matrice initiale.
+## Q3. Que se passerait-il si vous tentiez d'exclure la combinaison 3.14 ? Pourquoi ?
 
-Ensuite, include ajoute cette combinaison.
-Donc, même si on écrit :
-exclude:
-  - os: ubuntu-latest
-    python-version: "3.14"
+La combinaison Ubuntu / Python 3.14 resterait présente.
 
+En effet, exclude est appliqué avant include.
 
-la combinaison ajoutée ensuite par include sera toujours présente.
+La combinaison Python 3.14 n'existe pas encore dans la matrice initiale lorsque exclude est appliqué.
 
-## Question Q4 – Quelle est la différence observée ? Dans quel cas choisir true ou false ?
-Correction :
-fail-fast: true	fail-fast: false
-Comportement par défaut	Désactive l'arrêt anticipé
-Un échec peut annuler les autres jobs en cours ou en attente	Les autres jobs continuent
-Exécution potentiellement plus rapide	Permet de récupérer tous les résultats
+Elle est ensuite ajoutée par include.
 
-Quand utiliser true ?
+## Q4. Quelle est la différence observée entre fail-fast true et false ? Dans quel cas choisiriez-vous true ou false ?
 
-Lorsqu'on souhaite arrêter rapidement les tests après un échec important afin d'économiser du temps et des ressources.
+Avec fail-fast: true, lorsqu'un job échoue, GitHub Actions peut annuler les autres jobs encore en cours ou en attente.
 
-Quand utiliser false ?
+Avec fail-fast: false, les autres jobs continuent leur exécution même si un job échoue.
 
-Lorsqu'on souhaite obtenir les résultats de toutes les combinaisons, notamment pour tester la compatibilité d'une application sur plusieurs systèmes et versions de Python.
+On choisit true pour arrêter rapidement les exécutions après un échec et économiser les ressources.
+
+On choisit false pour obtenir les résultats de toutes les combinaisons, notamment lors des tests de compatibilité sur plusieurs systèmes et versions.
+
+## Q5. Donnez deux raisons d'utiliser max-parallel en entreprise.
+
+1. Contrôler les coûts et la consommation des ressources en limitant le nombre de jobs exécutés simultanément.
+
+2. Éviter la surcharge de l'infrastructure CI/CD et des runners en répartissant les exécutions.
